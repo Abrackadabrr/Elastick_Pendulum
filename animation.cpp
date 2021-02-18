@@ -48,7 +48,7 @@ void pause(RenderWindow & window,bool* restart)
     }
 }
 
-void pyty (RenderTexture & path, int x , int y, int xpre, int ypre, bool draw_line)
+void pyty (RenderTexture & path, int x , int y, int xpre, int ypre, bool draw_line) // отрисовка траектории движени€ (типа путь)
 {
     if(draw_line)
     {
@@ -128,7 +128,7 @@ int animation(bool* restart)
     Sprite bg(BackgroundTexture);
     bg.setScale(0.7,0.7);
 
-//------------ѕодвес-----------//
+//------------ѕодвес-----------//(устанавливаетс€ положение точки подвеса (если поставить в центр можно смотреть как по кругу колбасит)
     podv.x = (int)win_x/2;
     podv.y = 100;//(int)win_y/2;
 
@@ -143,10 +143,10 @@ int animation(bool* restart)
     double x, vx, y, vy, x_prev, vx_prev, y_prev, vy_prev;
     const double pi = 3.141592;
         Con cnst;
-        cnst.l = 0.07;
-        cnst.m = 0.1;
+        cnst.l = 1;
+        cnst.m = 1;
         cnst.g = 9.81;
-        cnst.k = 40;
+        cnst.k = 100;
         PhaseSpace in; //initial conditions
         in.x = ((cnst.m*cnst.g)/cnst.k) - ((cnst.m*cnst.g)/cnst.k)/2;
         in.y = 0.0001;
@@ -297,3 +297,4 @@ int main()
         animation(&restart);
     return 0;
 }
+//del позвол€ет начать заново отрисовку пути, O - выключить/включить
