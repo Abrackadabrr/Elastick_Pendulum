@@ -1,0 +1,14 @@
+Pendulum characteristics:
+	Length (meters) (1) 
+	Spring rate (Newton / meter) (100)
+	Cargo weight (kilograms) (1)
+
+Environmental characteristics:
+	Free fall acceleration (meters / seconds squared) (9.81)
+
+You can also set initial values:
+	Angle start value (0)
+
+If some of these parameters are not specified by the user, 
+then they will take default values 
+(they are indicated in brackets after the name)
