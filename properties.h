@@ -12,8 +12,60 @@
 #include "TextBar.h"
 #include "text.h"
 #include "BasicWindow.h"
+
+class Properties_window : public BasicWindow{
+public:
+    void other_window_things(Con& cnst, PhaseSpace cond){
+        if (!text_bars[0].returnText().empty()) cnst.l = std::stod(text_bars[0].returnText());
+        if (!text_bars[1].returnText().empty()) cnst.g = std::stod(text_bars[0].returnText());
+        if (!text_bars[2].returnText().empty()) cnst.m = std::stod(text_bars[0].returnText());
+        if (!text_bars[3].returnText().empty()) cnst.k = std::stod(text_bars[0].returnText());
+        if (!text_bars[4].returnText().empty()) cond.y = std::stod(text_bars[0].returnText());
+    }
+
+    explicit Properties_window(sf::RenderWindow &win): BasicWindow(win) {
+        std::cout << window.getSettings().antialiasingLevel << std::endl;
+        sf::Font font;
+        try{
+            font.loadFromFile("../Fonts/18341.ttf");
+        } catch(std::exception& e) {
+            std::cout << e.what() << "\n";
+        }
+        sf::Texture textboxTexture; textboxTexture.loadFromFile("../images/text_field.png");
+
+        for (int i = 0; i < 5; ++i){
+            text_bars.emplace_back(400, 100 + i*150, 12, textboxTexture, font);
+            text_bars[i].setText(std::to_string(0));
+            texts.emplace_back(100, 150 + 150*i, "", 25,font);
+        }
+
+        texts.emplace_back(50, 850, "When you set all properties you want, close this window", 25, font);
+
+        texts[0].setString("Length (meters)");
+        texts[1].setString("Cargo weight (kilograms)");
+        texts[2].setString("Free fall acceleration (meters per seconds squared)");
+        texts[3].setString("Spring rate (Newton / meter)");
+        texts[4].setString("Angle start value");
+    }
+
+    void window_event_holder() override {
+        while (window.isOpen())
+        {
+            sf::Event event{};
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    return;
+
+                interface_event_holder(event);
+            }
+            display();
+        }
+    }
+};
+
 void main_function_in_properties(PhaseSpace& in, Con& cnst)
 {
+
 //____________Making_an_interface____________//
     sf::Font font;
     try{
@@ -55,7 +107,6 @@ void main_function_in_properties(PhaseSpace& in, Con& cnst)
 
     while (window.isOpen())
     {
-
         sf::Event event{};
         while (window.pollEvent(event))
         {
@@ -98,6 +149,12 @@ void main_function_in_properties(PhaseSpace& in, Con& cnst)
     if (!str.empty()) in.y =std::stod(str);
 
 //    cout << cnst->l<<endl<< cnst->g<<endl<< cnst->m<<endl<< cnst->k<<endl<< in->y<<endl;
+#if(0)
+    sf::RenderWindow alo(sf::VideoMode(800, 950), "Set properties");
+    Properties_window wind(alo);
+    wind.window_event_holder();
+    wind.other_window_things(cnst, in);
+#endif
 }
 
 #endif //PROPS

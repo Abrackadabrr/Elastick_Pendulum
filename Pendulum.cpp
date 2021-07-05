@@ -11,7 +11,6 @@ Pendulum::PendulumElement::PendulumElement(sf::Texture &image, float scale_x, fl
     sprite.setScale(scale_x, scale_y);
 }
 
-
 Pendulum::Pendulum(sf::Texture &ball_image, sf::Texture &starting_point_image):
 ball(ball_image, 0.09, 0.09),
 starting_point(starting_point_image, 0.5,0.5),

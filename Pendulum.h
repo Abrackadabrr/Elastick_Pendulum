@@ -50,7 +50,7 @@ public:
 
     void display(sf::RenderWindow &window);
 
-    bool isSusPointMove() {return is_sus_point_move;};
+    bool isSusPointMove() const {return is_sus_point_move;};
 
     void event_holder(sf::Event &event, sf::RenderWindow &window)
     {

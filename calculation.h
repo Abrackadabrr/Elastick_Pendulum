@@ -7,7 +7,7 @@
 #include "some_structs.h"
 #include <cmath>
 const double c[5] {0, 0, 1.0 / 2, 1.0 / 2, 1};
-const double TIMESTEP = 0.005;
+double TIMESTEP = 0.005;
 
 namespace Calculation {
     double Fx(double x, double y, double vx, double vy, const Con &cnst) {

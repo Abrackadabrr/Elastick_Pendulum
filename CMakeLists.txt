@@ -1,16 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
-project(E)
+project(Elastic_pendulum)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(E
+add_executable(Elastic_pendulum
         animation.cpp
         TextBar.cpp
         text.cpp
         Button.cpp
-        Pendulum.cpp)
+        Pendulum.cpp
+        ContinuousSlider.cpp)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 include_directories(${SFML_INCLUDE_DIRS})
-target_link_libraries(E sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+target_link_libraries(Elastic_pendulum sfml-system sfml-window sfml-graphics sfml-audio sfml-network)

@@ -1,7 +1,6 @@
 //
 // Created by evgen on 21.06.2021.
 //
-
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <cmath>
@@ -11,12 +10,13 @@
 #include "Pendulum.h"
 #include "ChoiseBar.h"
 #include "text.h"
+#include "TextBar.h"
+#include "ContinuousSlider.h"
 
 using sf::Event;
 using sf::RenderWindow;
 using sf::Texture;
 using sf::Keyboard;
-
 
 void pause(RenderWindow &window, bool &restart) {
     while (true) {
@@ -41,7 +41,7 @@ void pause(RenderWindow &window, bool &restart) {
 }
 
 int animation(bool &restart) {
-    const int DRAWS_FREQUENCY = 1;  // how often do you want to draw a new step
+    const int DRAWS_FREQUENCY = 1;  // how often do you want to display a new step TODO
     const int WINDOW_SIZE_X = 860;
     const int WINDOW_SIZE_Y = 860;
     const int SCALE_FACTOR_OF_SCALE_FACTOR = 20;
@@ -66,7 +66,7 @@ int animation(bool &restart) {
 
     // Creation of pendulum
     Pendulum pendulum(ball_texture, sus_point_texture);
-    pendulum.setSusPointPosition({(WINDOW_SIZE_X / 2.), 100});
+    pendulum.setSusPointPosition({(sf::Mouse::getPosition().x / 1.), (sf::Mouse::getPosition().y / 1.)});
     // Init of some constants (not in program, but in real world)
     Con cnst{0.16, 1, 9.81, 100};
     PhaseSpace previous_step{((cnst.m * cnst.g) / cnst.k), 1. / 2, 0, 0};  // initial conditions
@@ -101,6 +101,11 @@ int animation(bool &restart) {
     Interface::ChoiseBar::active = 2;
     Interface::ChoiseBar::amount_of_turned_on_together_bars = 3;
 
+    Interface::ContinuousSlider speed_slider(50, 120, window);
+    speed_slider.create(0.1, 10);
+    speed_slider.setSliderValue(1);
+    Interface::text speed_slider_text(45, 160, "Speed", 20, font, sf::Color(255, 50, 0), sf::Text::Style::Bold);
+
     while (window.isOpen()) {
         clock.restart();
 
@@ -110,6 +115,7 @@ int animation(bool &restart) {
             button_back.event_holder(event);
             path_visibility_chose.event_holder(event);
             ball_visibility_chose.event_holder(event);
+            speed_slider.event_holder(event);
             spring_visibility_chose.event_holder(event);
             if (event.type == Event::Closed) {
                 window.close();
@@ -121,7 +127,6 @@ int animation(bool &restart) {
                 scale_factor += SCALE_FACTOR_OF_SCALE_FACTOR * event.mouseWheel.delta;
                 pendulum.clearPath();
             }
-
             pendulum.setPathVisibility(path_visibility_chose.return_value());
             pendulum.setBallVisibility(ball_visibility_chose.return_value());
             pendulum.setSpringVisibility(spring_visibility_chose.return_value());
@@ -157,12 +162,15 @@ int animation(bool &restart) {
             ball_visibility_text.display(window);
             spring_visibility_chose.display(window);
             spring_visibility_text.display(window);
+            speed_slider.display(window);
+            speed_slider_text.display(window);
             window.display();
         }
         previous_step = current_step;
         float time = clock.getElapsedTime().asMilliseconds();
-        while (time < TIMESTEP * 1000) {
+        while (time < TIMESTEP * 1000 * (1 / speed_slider.getSliderValue())) {
             time = clock.getElapsedTime().asMilliseconds();
+            std::cout << "asasasasss" << std::endl;
         }
         all_time = all_time + time;
         amount_of_draws++;

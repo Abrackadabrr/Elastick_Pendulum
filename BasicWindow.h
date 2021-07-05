@@ -11,19 +11,23 @@
 #include <vector>
 #include <algorithm>
 class BasicWindow{
-    sf::RenderWindow window;
-    std::vector<Interface::Button> buttons {};
-    std::vector<Interface::ChoiseBar> chose_bars {};
-    std::vector<Interface::text> texts {};
-    std::vector<Interface::TextBar> text_bars {};
+protected:
+    explicit BasicWindow(sf::RenderWindow &win): window(win){};
 
-    BasicWindow() = default;
+    sf::RenderWindow &window;
+    std::vector<Interface::Button> buttons;
+    std::vector<Interface::ChoiseBar> chose_bars;
+    std::vector<Interface::text> texts;
+    std::vector<Interface::TextBar> text_bars;
+
+    virtual void window_event_holder() = 0;
 
     void display() {
         std::for_each(buttons.begin(), buttons.end(), [this](Interface::Button &b) {b.display(window);});
         std::for_each(chose_bars.begin(), chose_bars.end(), [this](Interface::ChoiseBar &b) {b.display(window);});
         std::for_each(text_bars.begin(), text_bars.end(), [this](Interface::TextBar &b) {b.display(window);});
         std::for_each(texts.begin(), texts.end(), [this](Interface::text &b) {b.display(window);});
+        window.display();
     }
 
     void interface_event_holder(const sf::Event &event){
@@ -31,9 +35,5 @@ class BasicWindow{
         std::for_each(chose_bars.begin(), chose_bars.end(), [event](Interface::ChoiseBar &b) {b.event_holder(event);});
         std::for_each(text_bars.begin(), text_bars.end(), [event](Interface::TextBar &b) {b.event_holder(event);});
     }
-
-    virtual void window_event_holder() = 0;
-
-    virtual void other_window_things() {};
 };
 #endif //E_BASICWINDOW_H
