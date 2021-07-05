@@ -86,10 +86,10 @@ void Interface::ContinuousSlider::setSliderPercentValue(float newPercentValue)
 
 void Interface::ContinuousSlider::display(sf::RenderWindow &window)
 {
-	window.draw(returnText(xCord - 5, yCord + 5, std::to_string(minValue), 10));
+	window.draw(returnText(xCord - 5, yCord + 5, std::to_string(minValue).substr(0, std::to_string(minValue).length() - 4), 10));
 	window.draw(axis);
-	window.draw(returnText(xCord + axisWidth - 5, yCord + 5, std::to_string(maxValue), 10));
+	window.draw(returnText(xCord + axisWidth - 5, yCord + 5, std::to_string(maxValue).substr(0, std::to_string(maxValue).length() - 4), 10));
 	window.draw(slider);
 	window.draw(returnText(slider.getPosition().x - sliderWidth, slider.getPosition().y - sliderHeight,
-		std::to_string(sliderValue), 10));
+                           std::to_string(sliderValue).substr(0, std::to_string(sliderValue).length() - 4), 10));
 }

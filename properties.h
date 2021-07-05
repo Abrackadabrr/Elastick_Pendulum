@@ -12,7 +12,7 @@
 #include "TextBar.h"
 #include "text.h"
 #include "BasicWindow.h"
-
+#if(0)
 class Properties_window : public BasicWindow{
 public:
     void other_window_things(Con& cnst, PhaseSpace cond){
@@ -62,7 +62,7 @@ public:
         }
     }
 };
-
+#endif
 void main_function_in_properties(PhaseSpace& in, Con& cnst)
 {
 

@@ -6,7 +6,6 @@
 #include <cmath>
 #include "calculation.h"
 #include "menu.h"
-#include "Button.h"
 #include "Pendulum.h"
 #include "ChoiseBar.h"
 #include "text.h"
@@ -46,7 +45,7 @@ int animation(bool &restart) {
     const int WINDOW_SIZE_Y = 860;
     const int SCALE_FACTOR_OF_SCALE_FACTOR = 20;
     int scale_factor = 2000;
-    float all_time = 0;  // real all time
+    double all_time = 0;  // real all time
     int amount_of_draws = 0;  // param that helps us count an iterations
 
     sf::Clock clock;
@@ -86,8 +85,8 @@ int animation(bool &restart) {
 
     // Creation of an interface
     bool is_animation_dont_runs = false;
-    Interface::Button button_back(730, 30, font, "To main menu", 20, \
-    sf::Color(255, 50, 0), sf::Color(1, 100, 32), window, is_animation_dont_runs);
+    Interface::Button::BoolTypeButton button_back(window, 730, 30, font, "To main menu", 20, \
+    sf::Color(255, 50, 0), sf::Color(1, 100, 32), is_animation_dont_runs);
 
     Interface::ChoiseBar path_visibility_chose(50, 30, 10, 3, sf::Color(255, 50, 0),\
                                         sf::Color(1, 100, 32), false);
@@ -102,7 +101,7 @@ int animation(bool &restart) {
     Interface::ChoiseBar::amount_of_turned_on_together_bars = 3;
 
     Interface::ContinuousSlider speed_slider(50, 120, window);
-    speed_slider.create(0.1, 10);
+    speed_slider.create(0.1, 2);
     speed_slider.setSliderValue(1);
     Interface::text speed_slider_text(45, 160, "Speed", 20, font, sf::Color(255, 50, 0), sf::Text::Style::Bold);
 
@@ -138,7 +137,7 @@ int animation(bool &restart) {
         else current_step = previous_step;
 
         if (amount_of_draws % (DRAWS_FREQUENCY) == 0) {
-            window.clear(sf::Color(255, 255, 255, 255));
+            window.clear(sf::Color(197,178,232, 255));
 
             pendulum.setBallPosition({(pendulum.getSusPointPosition().x +
                                        scale_factor * (cnst.l + current_step.x) * sin(current_step.y)),
@@ -153,7 +152,7 @@ int animation(bool &restart) {
                     (pendulum.getSusPointPosition().y +
                      scale_factor * (cnst.l + previous_step.x) * cos(previous_step.y)));
 
-            window.draw(background_sprite);
+//            window.draw(background_sprite);
             pendulum.display(window);
             button_back.display(window);
             path_visibility_chose.display(window);
@@ -167,18 +166,19 @@ int animation(bool &restart) {
             window.display();
         }
         previous_step = current_step;
-        float time = clock.getElapsedTime().asMilliseconds();
-        while (time < TIMESTEP * 1000 * (1 / speed_slider.getSliderValue())) {
+        double time = clock.getElapsedTime().asMilliseconds();
+        double time_limit = TIMESTEP * 1000 * (1 / speed_slider.getSliderValue());
+        std::cout << speed_slider.getSliderValue() << std::endl;
+        while (time < time_limit) {
             time = clock.getElapsedTime().asMilliseconds();
-            std::cout << "asasasasss" << std::endl;
         }
         all_time = all_time + time;
         amount_of_draws++;
     }
 
-    std::cout << "real time:\t\t\t\t\t\t" << all_time << std::endl << "count time:\t\t\t\t\t\t"
+    std::cout << "real time:\t\t\t\t\t\t" << all_time << std::endl << "count time:\t\t\t\t\t\t" \
               << TIMESTEP * amount_of_draws << std::endl \
- << "amount if iterations: \t\t\t" << amount_of_draws << std::endl << std::endl;
+              << "amount if iterations: \t\t\t" << amount_of_draws << std::endl << std::endl;
     return 0;
 }
 

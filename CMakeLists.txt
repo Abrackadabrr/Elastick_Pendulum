@@ -7,9 +7,10 @@ add_executable(Elastic_pendulum
         animation.cpp
         TextBar.cpp
         text.cpp
-        Button.cpp
         Pendulum.cpp
-        ContinuousSlider.cpp)
+        ContinuousSlider.cpp
+        ButtonFrame.cpp)
+
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

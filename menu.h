@@ -9,7 +9,7 @@
 #include <string>
 #include <fstream>
 #include "properties.h"
-#include "Button.h"
+#include "BoolTypeButton.h"
 
 void lost_focus (sf::RenderWindow & window)
 {
@@ -59,26 +59,22 @@ bool main_function_in_menu(bool& restart, PhaseSpace& in, Con& cnst)
     Bg.setColor(sf::Color(255, 255, 255, 255)); Bg.setScale(0.7,0.7);
     Bg.setPosition(0, 0);
 
-    Interface::Button b_start(X_CENTER_OF_MENU, Y_CENTER_OF_MENU,
-                   start_button_Texture,
-                   sf::Color::White, sf::Color::Green,
-                   window,
-                   starting_animation);
-    Interface::Button b_about(X_CENTER_OF_MENU, Y_CENTER_OF_MENU + DISTANCE_BETWEEN_BUTTONS,
-                   about_button_Texture,
-                   sf::Color::White, sf::Color::Green,
-                   window,
-                   is_about_window_opend);
-    Interface::Button b_exit(X_CENTER_OF_MENU, Y_CENTER_OF_MENU + 3 * DISTANCE_BETWEEN_BUTTONS,
-                  exit_button_Texture,
-                  sf::Color::White, sf::Color::Green,
-                  window,
-                  is_app_closed);
-    Interface::Button b_prop(X_CENTER_OF_MENU, Y_CENTER_OF_MENU + 2 * DISTANCE_BETWEEN_BUTTONS,
-                  prop_button_Texture,
-                  sf::Color::White, sf::Color::Green,
-                  window,
-                  is_window_with_properties_opened);
+    Interface::Button::BoolTypeButton b_start(window ,X_CENTER_OF_MENU, Y_CENTER_OF_MENU,
+                                   start_button_Texture,
+                                   sf::Color::White, sf::Color::Green,
+                                   starting_animation);
+    Interface::Button::BoolTypeButton b_about(window, X_CENTER_OF_MENU, Y_CENTER_OF_MENU + DISTANCE_BETWEEN_BUTTONS,
+                                   about_button_Texture,
+                                   sf::Color::White, sf::Color::Green,
+                                   is_about_window_opend);
+    Interface::Button::BoolTypeButton b_exit(window, X_CENTER_OF_MENU, Y_CENTER_OF_MENU + 3 * DISTANCE_BETWEEN_BUTTONS,
+                                  exit_button_Texture,
+                                  sf::Color::White, sf::Color::Green,
+                                  is_app_closed);
+    Interface::Button::BoolTypeButton b_prop(window, X_CENTER_OF_MENU, Y_CENTER_OF_MENU + 2 * DISTANCE_BETWEEN_BUTTONS,
+                                  prop_button_Texture,
+                                  sf::Color::White, sf::Color::Green,
+                                  is_window_with_properties_opened);
 
     while (window.isOpen())
     {
@@ -100,14 +96,14 @@ bool main_function_in_menu(bool& restart, PhaseSpace& in, Con& cnst)
         }
         head.setColor(sf::Color::White);
 
-        window.clear(sf::Color(129, 181, 221));
+        window.clear(sf::Color(199,167,243, 255));
 
-        if (starting_animation)  {window.close(); return true;};
-        if (is_about_window_opend) {};
+        if (starting_animation) {window.close(); return true;}
+        if (is_about_window_opend) {}
         if (is_app_closed) {window.close(); restart = false; return false;}
         if (is_window_with_properties_opened) {main_function_in_properties(in, cnst);}
 
-        window.draw(Bg);
+//        window.draw(Bg);
         window.draw(head);
 
         b_start.display(window);
