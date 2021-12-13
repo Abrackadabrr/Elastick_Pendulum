@@ -9,8 +9,13 @@ You can:
 - make simulation slow or faster
 
 To build and run do this in terminal:
+
 mkdir build
+
 cd build
+
 cmake ..
+
 make
+
 ./ElastickPendulum
