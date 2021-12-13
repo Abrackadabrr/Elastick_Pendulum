@@ -1,5 +1,5 @@
 # Elastick_Pendulum
-Hi, this little project is about a elastic pendulum.
+Hi, this little project is about an elastic pendulum.
 
 You can:
 - set parameters you want and check, how is works in real time
@@ -7,3 +7,10 @@ You can:
 - check path
 - replace pendulum 
 - make simulation slow or faster
+
+To build and run do this in terminal:
+mkdir build
+cd build
+cmake ..
+make
+./ElastickPendulum
