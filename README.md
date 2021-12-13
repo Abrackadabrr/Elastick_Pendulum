@@ -12,10 +12,10 @@ To build and run do this in terminal:
 
 mkdir build
 
-cd build
+cd build/
 
 cmake ..
 
 make
 
-./ElastickPendulum
+./Elastic_pendulum 
