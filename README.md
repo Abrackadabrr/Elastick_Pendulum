@@ -10,11 +10,15 @@ You can:
 
 To build and run do this in terminal:
 
-`mkdir build
-cd build/
-cmake ..
-make
-./Elastic_pendulum`
+`mkdir build`
+
+`cd build/`
+
+`cmake ..`
+
+`make`
+
+`./Elastic_pendulum`
 
 # Requirements
 SFML 
